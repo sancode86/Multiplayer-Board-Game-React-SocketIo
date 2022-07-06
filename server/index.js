@@ -27,8 +27,10 @@ var tableroInicial = [
     0, 0, 0, 0, 0, 0, 0, 0, 0,
   ];
 
+ var tablero = [...tableroInicial] 
+
 app.get("/api", (req, res) => {
-    res.json({ tablero: tableroInicial });
+    res.json({ tablero: tablero });
   }); 
 
 var clientesConectados = [];
@@ -37,7 +39,7 @@ io.on('connection', (socket) => {
   // console.log('Cliente conectado: ', socket.id);
   clientesConectados.push(socket.id);
 
-  io.emit("mensaje", tableroInicial);
+  io.emit("mensaje", tablero);
   io.emit("socket", socket.id);
 
   io.to(clientesConectados[0]).emit("tuPieza", PJ1);
@@ -45,21 +47,21 @@ io.on('connection', (socket) => {
 
   socket.on('movimiento', (userData) => {
  
-    tableroInicial[userData.index] = userData.pieza;
-    tableroInicial[userData.vaciar] = 0;
-    io.emit("mensaje", tableroInicial);
+    tablero[userData.index] = userData.pieza;
+    tablero[userData.vaciar] = 0;
+    io.emit("mensaje", tablero);
     io.emit("socket", socket.id);
 
     console.log(userData);
-    console.log(tableroInicial);
+    console.log(tablero);
 
   });
 
 });
 
 function checkearGanador(){
-  var buscarPJ1 = tableroInicial.find(pieza => pieza == PJ1);
-  var buscarPJ2 = tableroInicial.find(pieza => pieza == PJ2);
+  var buscarPJ1 = tablero.find(pieza => pieza == PJ1);
+  var buscarPJ2 = tablero.find(pieza => pieza == PJ2);
   if(buscarPJ1 === undefined){
     console.log("gano PJ2");
   }
