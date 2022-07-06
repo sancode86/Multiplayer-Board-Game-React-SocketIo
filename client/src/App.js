@@ -5,7 +5,6 @@ import io from "socket.io-client";
 let socket = io("//localhost:3030", {});
 // const socket = io() 
 
-
 function App() {
   const [tablero, setTablero] = useState([0]);
   const [enMano, setEnMano] = useState("");
@@ -13,17 +12,14 @@ function App() {
   const [piezaEnemigo, setPiezaEnemigo] = useState(1);
   const [vida, setVida] = useState(1);
   const [socketId, setSocketId] = useState("");
-
   const [tuCastillo, setTuCastillo] = useState(3);
   const [castilloEnemigo, setCastilloEnemigo] = useState(4);
 
   // let movimiento = new Audio("/movimiento.mp3");
 
   const sonidoMovimiento = () => {
-    // movimiento.play();  
-  
+    // movimiento.play();    
   }
-
 
   useEffect(() => {
     fetch("/api")
@@ -53,29 +49,22 @@ function App() {
   socket.on("socket", (socket) => {
     setSocketId(socketId);
   });
-
   socket.on("tuPieza", (pieza) => {
     setTuPieza(pieza);
   });
   socket.on("piezaEnemigo", (pieza) => {
     setPiezaEnemigo(pieza);
   });
-
-
   socket.on("tuCastillo", (pieza) => {
     setTuCastillo(pieza);
   });
-
   socket.on("castilloEnemigo", (pieza) => {
     setCastilloEnemigo(pieza);
   });
-
-
   socket.on("vida", (vida) => {
     setVida(vida);
     console.log("vida", vida);
   });
-
   socket.on("movimientoDetectado", () => {
     sonidoMovimiento();
     console.log("MOVIMIENTO")
