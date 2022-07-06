@@ -59,6 +59,7 @@ io.on('connection', (socket) => {
     tablero[userData.vaciar] = 0;
     io.emit("mensaje", tablero);
     io.emit("socket", socket.id);
+    io.emit("movimientoDetectado");
 
     console.log(userData);
     console.log(tablero);

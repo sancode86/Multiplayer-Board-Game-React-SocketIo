@@ -21,7 +21,9 @@ function App() {
   let movimiento = new Audio("/movimiento.mp3");
 
   const sonidoMovimiento = () => {
-    movimiento.play()
+    movimiento.play();
+    movimiento.stop(); 
+  
   }
 
 
@@ -60,6 +62,10 @@ function App() {
   });
   socket.on("piezaEnemigo", (pieza) => {
     setPiezaEnemigo(pieza);
+  });
+  socket.on("movimientoDetectado", () => {
+    sonidoMovimiento();
+    console.log("MOVIMIENTO")
   });
 
   function clickCasillero(index) {
@@ -115,7 +121,7 @@ function App() {
     update[enMano.index] = 0;
     setTablero(update);
     setEnMano("");
-    sonidoMovimiento()
+    // sonidoMovimiento();
 
     // Rehabilitar todos los casilleros
     for (let i = 0; i < tablero.length; i++) {
