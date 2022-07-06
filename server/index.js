@@ -67,6 +67,15 @@ io.on('connection', (socket) => {
 
   });
 
+  socket.on("disconnect", (reason) => {
+   console.log("Se fue", socket.id)
+   
+   var index = clientesConectados.indexOf(socket.id);
+    if (index !== -1) {
+      clientesConectados.splice(index, 1);
+    }
+  });
+
 });
 
 function checkearGanador(){
