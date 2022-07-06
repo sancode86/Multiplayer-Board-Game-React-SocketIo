@@ -3,6 +3,6 @@
 Simple board game based on "The Art Of War" (book)
 
 - ReactJS
-- Realtime.
+- Realtime (No turn based).
 - 2 Players game.
 

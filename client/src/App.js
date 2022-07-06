@@ -9,7 +9,7 @@ function App() {
   const [enMano, setEnMano] = useState("");
   const [tuPieza, setTuPieza] = useState(2);
   const [piezaEnemigo, setPiezaEnemigo] = useState(1);
-
+  const [vida, setVida] = useState(3);
   const [socketId, setSocketId] = useState("");
 
   useEffect(() => {
@@ -17,6 +17,12 @@ function App() {
       .then((res) => res.json())
       .then((data) => setTablero(data.tablero));
   }, []);
+
+  useEffect(() => {
+   if(vida === 0){
+    console.log("Perdiste");
+   }
+  }, [vida]);
 
   // Crear referencias a los casilleros, emular/similar a "getElementbyId"
   const refCasillero = useRef([]);
@@ -34,6 +40,10 @@ function App() {
 
   socket.on("tuPieza", (pieza) => {
     setTuPieza(pieza);
+  });
+  socket.on("vida", (vida) => {
+    setVida(vida);
+    console.log("vida", vida);
   });
   socket.on("piezaEnemigo", (pieza) => {
     setPiezaEnemigo(pieza);

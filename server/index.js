@@ -15,6 +15,9 @@ const io = new Server(server, {
 const PJ1 = "😀";
 const PJ2 = "😋";
 
+var vidaPJ1 = 3;
+var vidaPJ2 = 3;
+
 var tableroInicial = [
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, PJ2, PJ2, PJ2, PJ2, PJ2, 0, 0,
@@ -44,6 +47,9 @@ io.on('connection', (socket) => {
 
   io.to(clientesConectados[0]).emit("tuPieza", PJ1);
   io.to(clientesConectados[0]).emit("piezaEnemigo", PJ2);
+
+  io.to(clientesConectados[0]).emit("vida", vidaPJ1);
+  io.to(clientesConectados[1]).emit("vida", vidaPJ2);
 
   socket.on('movimiento', (userData) => {
  
