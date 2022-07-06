@@ -17,8 +17,7 @@ function App() {
   let movimiento = new Audio("/movimiento.mp3");
 
   const sonidoMovimiento = () => {
-    movimiento.play();
-    movimiento.stop(); 
+    // movimiento.play();  
   
   }
 

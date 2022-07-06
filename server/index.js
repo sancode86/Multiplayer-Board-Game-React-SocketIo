@@ -68,8 +68,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on("disconnect", (reason) => {
-   console.log("Se fue", socket.id)
-   console.log("cantidad",  io.engine.clientsCount)
+   console.log("Se fue: ", socket.id)
+   console.log("cantidad Clientes: ",  io.engine.clientsCount)
 
    if(io.engine.clientsCount === 0){
     clientesConectados = [];
