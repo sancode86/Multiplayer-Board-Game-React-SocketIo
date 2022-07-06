@@ -39,7 +39,7 @@ app.get("/api", (req, res) => {
 var clientesConectados = [];
 
 io.on('connection', (socket) => {
-  // console.log('Cliente conectado: ', socket.id);
+  console.log('Cliente conectado: ', socket.id);
   clientesConectados.push(socket.id);
 
   io.emit("mensaje", tablero);
@@ -47,6 +47,8 @@ io.on('connection', (socket) => {
 
   io.to(clientesConectados[0]).emit("tuPieza", PJ1);
   io.to(clientesConectados[0]).emit("piezaEnemigo", PJ2);
+  io.to(clientesConectados[1]).emit("tuPieza", PJ2);
+  io.to(clientesConectados[1]).emit("piezaEnemigo", PJ1);
 
   io.to(clientesConectados[0]).emit("vida", vidaPJ1);
   io.to(clientesConectados[1]).emit("vida", vidaPJ2);

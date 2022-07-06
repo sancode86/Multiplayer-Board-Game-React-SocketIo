@@ -5,7 +5,7 @@ let socket = io("//localhost:3030", {});
 // const socket = io() PARA PRODUCCION
 
 function App() {
-  const [tablero, setTablero] = useState([0, 1, 1, 0]);
+  const [tablero, setTablero] = useState([0]);
   const [enMano, setEnMano] = useState("");
   const [tuPieza, setTuPieza] = useState(2);
   const [piezaEnemigo, setPiezaEnemigo] = useState(1);
