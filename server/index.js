@@ -12,8 +12,8 @@ const io = new Server(server, {
   });
 
 // Piezas de los jugadores
-const PJ1 = "😀";
-const PJ2 = "😋";
+const PJ1 = "☠️";
+const PJ2 = "⚔️";
 
 const PC1 = "🏯";
 const PC2 = "🏰";
