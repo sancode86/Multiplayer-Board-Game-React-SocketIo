@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef, createRef } from "react";
 import "./App.css";
 import io from "socket.io-client";
+
+
+
+
 let socket = io("//localhost:3030", {});
 // const socket = io() PARA PRODUCCION
+
+
 
 function App() {
   const [tablero, setTablero] = useState([0]);
@@ -11,6 +17,13 @@ function App() {
   const [piezaEnemigo, setPiezaEnemigo] = useState(1);
   const [vida, setVida] = useState(3);
   const [socketId, setSocketId] = useState("");
+
+  let movimiento = new Audio("/movimiento.mp3");
+
+  const sonidoMovimiento = () => {
+    movimiento.play()
+  }
+
 
   useEffect(() => {
     fetch("/api")
@@ -102,6 +115,7 @@ function App() {
     update[enMano.index] = 0;
     setTablero(update);
     setEnMano("");
+    sonidoMovimiento()
 
     // Rehabilitar todos los casilleros
     for (let i = 0; i < tablero.length; i++) {
