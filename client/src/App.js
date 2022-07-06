@@ -2,12 +2,8 @@ import { useState, useEffect, useRef, createRef } from "react";
 import "./App.css";
 import io from "socket.io-client";
 
-
-
-
 let socket = io("//localhost:3030", {});
-// const socket = io() PARA PRODUCCION
-
+// const socket = io() 
 
 
 function App() {
