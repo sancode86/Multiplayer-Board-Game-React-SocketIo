@@ -11,10 +11,13 @@ function App() {
   const [enMano, setEnMano] = useState("");
   const [tuPieza, setTuPieza] = useState(2);
   const [piezaEnemigo, setPiezaEnemigo] = useState(1);
-  const [vida, setVida] = useState(3);
+  const [vida, setVida] = useState(1);
   const [socketId, setSocketId] = useState("");
 
-  let movimiento = new Audio("/movimiento.mp3");
+  const [tuCastillo, setTuCastillo] = useState(3);
+  const [castilloEnemigo, setCastilloEnemigo] = useState(4);
+
+  // let movimiento = new Audio("/movimiento.mp3");
 
   const sonidoMovimiento = () => {
     // movimiento.play();  
@@ -30,7 +33,7 @@ function App() {
 
   useEffect(() => {
    if(vida === 0){
-    console.log("Perdiste");
+    //console.log("Perdiste");
    }
   }, [vida]);
 
@@ -42,6 +45,9 @@ function App() {
 
   socket.on("mensaje", (mensaje) => {
     setTablero(mensaje);
+    if(!tablero.includes(tuCastillo)){   
+      setVida(0)
+    }
   });
 
   socket.on("socket", (socket) => {
@@ -51,13 +57,25 @@ function App() {
   socket.on("tuPieza", (pieza) => {
     setTuPieza(pieza);
   });
+  socket.on("piezaEnemigo", (pieza) => {
+    setPiezaEnemigo(pieza);
+  });
+
+
+  socket.on("tuCastillo", (pieza) => {
+    setTuCastillo(pieza);
+  });
+
+  socket.on("castilloEnemigo", (pieza) => {
+    setCastilloEnemigo(pieza);
+  });
+
+
   socket.on("vida", (vida) => {
     setVida(vida);
     console.log("vida", vida);
   });
-  socket.on("piezaEnemigo", (pieza) => {
-    setPiezaEnemigo(pieza);
-  });
+
   socket.on("movimientoDetectado", () => {
     sonidoMovimiento();
     console.log("MOVIMIENTO")
@@ -86,10 +104,12 @@ function App() {
     for (let w = 0; w < movimientosPosibles.length; w++) {
       if (
         tablero[index + movimientosPosibles[w]] !== tuPieza &&
+        tablero[index + movimientosPosibles[w]] !== tuCastillo &&
         index + movimientosPosibles[w] < tablero.length &&
         index + movimientosPosibles[w] > -1
       ) {
-        if (tablero[index + movimientosPosibles[w]] === piezaEnemigo) {
+        if (tablero[index + movimientosPosibles[w]] === piezaEnemigo ||
+          tablero[index + movimientosPosibles[w]] === castilloEnemigo) {
           refCasillero.current[
             index + movimientosPosibles[w]
           ].current.style.backgroundColor = colorAtaque;
@@ -122,8 +142,9 @@ function App() {
     for (let i = 0; i < tablero.length; i++) {
       refCasillero.current[i].current.style.backgroundColor = "#504945";
       refCasillero.current[i].current.style.border = "1px solid #3c3836";
-      refCasillero.current[i].current.disabled = false;
+      refCasillero.current[i].current.disabled = false;      
     }
+  
   }
 
   function levantarPieza(pieza, index) {

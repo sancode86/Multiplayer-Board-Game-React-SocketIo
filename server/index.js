@@ -15,11 +15,14 @@ const io = new Server(server, {
 const PJ1 = "😀";
 const PJ2 = "😋";
 
-var vidaPJ1 = 3;
-var vidaPJ2 = 3;
+const PC1 = "🏯";
+const PC2 = "🏰";
+
+var vidaPJ1 = 1;
+var vidaPJ2 = 1;
 
 var tableroInicial = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, PC2, 0, 0, 0, 0,
     0, 0, PJ2, PJ2, PJ2, PJ2, PJ2, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -27,7 +30,7 @@ var tableroInicial = [
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, PJ1, PJ1, PJ1, PJ1, PJ1, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, PC1, 0, 0, 0, 0,
   ];
 
  var tablero = [...tableroInicial] 
@@ -47,8 +50,14 @@ io.on('connection', (socket) => {
 
   io.to(clientesConectados[0]).emit("tuPieza", PJ1);
   io.to(clientesConectados[0]).emit("piezaEnemigo", PJ2);
+  io.to(clientesConectados[0]).emit("tuCastillo", PC1);
+  io.to(clientesConectados[0]).emit("castilloEnemigo", PC2);
+
+
   io.to(clientesConectados[1]).emit("tuPieza", PJ2);
   io.to(clientesConectados[1]).emit("piezaEnemigo", PJ1);
+  io.to(clientesConectados[1]).emit("tuCastillo", PC2);
+  io.to(clientesConectados[1]).emit("castilloEnemigo", PC1);
 
   io.to(clientesConectados[0]).emit("vida", vidaPJ1);
   io.to(clientesConectados[1]).emit("vida", vidaPJ2);
@@ -84,12 +93,28 @@ io.on('connection', (socket) => {
 function checkearGanador(){
   var buscarPJ1 = tablero.find(pieza => pieza == PJ1);
   var buscarPJ2 = tablero.find(pieza => pieza == PJ2);
+
+  var buscarPC1 = tablero.find(pieza => pieza == PC1);
+  var buscarPC2 = tablero.find(pieza => pieza == PC2);
+
+
   if(buscarPJ1 === undefined){
     console.log("gano PJ2");
     tablero = [...tableroInicial];
     io.emit("mensaje", tablero);
   }
   if(buscarPJ2 === undefined){
+    console.log("gano PJ1");
+    tablero = [...tableroInicial];
+    io.emit("mensaje", tablero);
+  }
+
+  if(buscarPC1 === undefined){
+    console.log("gano PJ2");
+    tablero = [...tableroInicial];
+    io.emit("mensaje", tablero);
+  }
+  if(buscarPC2 === undefined){
     console.log("gano PJ1");
     tablero = [...tableroInicial];
     io.emit("mensaje", tablero);
