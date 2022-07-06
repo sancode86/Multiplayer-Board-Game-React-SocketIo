@@ -73,6 +73,8 @@ io.on('connection', (socket) => {
 
    if(io.engine.clientsCount === 0){
     clientesConectados = [];
+    console.log("Reiniciando Tablero");
+    tablero = [...tableroInicial];
    }  
  
   });
