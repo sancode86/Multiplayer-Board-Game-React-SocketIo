@@ -62,6 +62,7 @@ io.on('connection', (socket) => {
 
     console.log(userData);
     console.log(tablero);
+    checkearGanador();
 
   });
 
@@ -72,9 +73,13 @@ function checkearGanador(){
   var buscarPJ2 = tablero.find(pieza => pieza == PJ2);
   if(buscarPJ1 === undefined){
     console.log("gano PJ2");
+    tablero = tableroInicial;
+    io.emit("mensaje", tablero);
   }
   if(buscarPJ2 === undefined){
     console.log("gano PJ1");
+    tablero = tableroInicial;
+    io.emit("mensaje", tablero);
   }
 }
 
